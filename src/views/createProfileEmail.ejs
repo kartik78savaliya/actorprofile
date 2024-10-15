@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile Details</title>
+</head>
+<body>
+    <h1>Profile Details</h1>
+
+    <div class="profile-container">
+
+        <!-- Name -->
+        <div class="profile-field">
+            <strong>Name:</strong> <span><%= profile.name %></span>
+        </div>
+
+        <!-- Email -->
+        <div class="profile-field">
+            <strong>Email:</strong> <span><%= profile.email %></span>
+        </div>
+
+        <!-- Mobile -->
+        <div class="profile-field">
+            <strong>Mobile:</strong> <span><%= profile.mobile %></span>
+        </div>
+
+        <!-- Bio -->
+        <div class="profile-field">
+            <strong>Bio:</strong> <span><%= profile.bio %></span>
+        </div>
+
+        <!-- Acting Experience -->
+        <div class="profile-field">
+            <strong>Acting Experience:</strong> <span><%= profile.actingExperience %></span>
+        </div>
+
+        <!-- Profile Picture -->
+        <div class="profile-field">
+            <strong>Profile Picture:</strong>
+            <% if (profile.profilePicture) { %>
+                <img src="<%= profile.profilePicture %>" alt="Profile Picture" style="width: 200px; height: auto;">
+            <% } else { %>
+                <span>No Profile Picture Available</span>
+            <% } %>
+        </div>
+
+        <!-- Video Link -->
+        <div class="profile-field">
+            <strong>Profile Video:</strong>
+            <% if (profile.video) { %>
+                <a href="<%= profile.video %>" target="_blank">Watch Video</a>
+            <% } else { %>
+                <span>No Video Available</span>
+            <% } %>
+        </div>
+
+        <!-- Profile Type -->
+        <div class="profile-field">
+            <strong>Profile Type:</strong> <span><%= profile.profileType %></span>
+        </div>
+
+        <!-- Casting Type -->
+        <div class="profile-field">
+            <strong>Casting Type:</strong> <span><%= profile.castingType %></span>
+        </div>
+
+        <!-- Union Member -->
+        <div class="profile-field">
+            <strong>Union Member:</strong> <span><%= profile.unionMember ? 'Yes' : 'No' %></span>
+        </div>
+
+        <!-- Main Crew Type -->
+        <div class="profile-field">
+            <strong>Main Crew Type:</strong> <span><%= profile.mainCrewType %></span>
+        </div>
+
+        <!-- Sub Crew Type -->
+        <div class="profile-field">
+            <strong>Sub Crew Type:</strong> <span><%= profile.subCrewType %></span>
+        </div>
+
+        <!-- Camera Crew Type -->
+        <div class="profile-field">
+            <strong>Camera Crew Type:</strong> <span><%= profile.cameraCrewType %></span>
+        </div>
+
+        <!-- Lighting Crew Type -->
+        <div class="profile-field">
+            <strong>Lighting Crew Type:</strong> <span><%= profile.lightingCrewType %></span>
+        </div>
+
+        <!-- Sound Crew Type -->
+        <div class="profile-field">
+            <strong>Sound Crew Type:</strong> <span><%= profile.soundCrewType %></span>
+        </div>
+
+        <!-- Staff Type -->
+        <div class="profile-field">
+            <strong>Staff Type:</strong> <span><%= profile.staffType %></span>
+        </div>
+
+        <!-- Producer Type -->
+        <div class="profile-field">
+            <strong>Producer Type:</strong> <span><%= profile.producerType %></span>
+        </div>
+
+        <!-- Director Type -->
+        <div class="profile-field">
+            <strong>Director Type:</strong> <span><%= profile.directorType %></span>
+        </div>
+
+        <!-- Production Manager Type -->
+        <div class="profile-field">
+            <strong>Production Manager Type:</strong> <span><%= profile.productionManagerType %></span>
+        </div>
+
+        <!-- Department Type -->
+        <div class="profile-field">
+            <strong>Department Type:</strong> <span><%= profile.departmentType %></span>
+        </div>
+
+        <!-- Art Department Type -->
+        <div class="profile-field">
+            <strong>Art Department Type:</strong> <span><%= profile.artDepartmentType %></span>
+        </div>
+
+        <!-- Costume Department Type -->
+        <div class="profile-field">
+            <strong>Costume Department Type:</strong> <span><%= profile.costumeDepartmentType %></span>
+        </div>
+
+        <!-- Special Effects Type -->
+        <div class="profile-field">
+            <strong>Special Effects Type:</strong> <span><%= profile.specialEffectsType %></span>
+        </div>
+
+        <!-- Equipment Type -->
+        <div class="profile-field">
+            <strong>Equipment Type:</strong> <span><%= profile.equipmentType %></span>
+        </div>
+
+        <!-- Camera Equipment Type -->
+        <div class="profile-field">
+            <strong>Camera Equipment Type:</strong> <span><%= profile.cameraEquipmentType %></span>
+        </div>
+
+        <!-- Lighting Equipment Type -->
+        <div class="profile-field">
+            <strong>Lighting Equipment Type:</strong> <span><%= profile.lightingEquipmentType %></span>
+        </div>
+
+        <!-- Sound Equipment Type -->
+        <div class="profile-field">
+            <strong>Sound Equipment Type:</strong> <span><%= profile.soundEquipmentType %></span>
+        </div>
+
+        <!-- Services Type -->
+        <div class="profile-field">
+            <strong>Services Type:</strong> <span><%= profile.servicesType %></span>
+        </div>
+
+        <!-- Catering Type -->
+        <div class="profile-field">
+            <strong>Catering Type:</strong> <span><%= profile.cateringType %></span>
+        </div>
+
+        <!-- Transportation Type -->
+        <div class="profile-field">
+            <strong>Transportation Type:</strong> <span><%= profile.transportationType %></span>
+        </div>
+
+        <!-- Accommodations Type -->
+        <div class="profile-field">
+            <strong>Accommodations Type:</strong> <span><%= profile.accommodationsType %></span>
+        </div>
+
+    </div>
+
+    <style>
+        .profile-container {
+            max-width: 800px;
+            margin: auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+        }
+
+        .profile-field {
+            margin-bottom: 15px;
+        }
+
+        .profile-field strong {
+            display: inline-block;
+            width: 200px;
+        }
+
+        .profile-field img {
+            margin-top: 10px;
+            border-radius: 10px;
+        }
+    </style>
+
+</body>
+</html>

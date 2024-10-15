@@ -1,0 +1,17 @@
+export const config = {
+    port: process.env.PORT,
+    mongoDbUri: process.env.MONGODB_URI,
+    mongoDbDatabaseName: process.env.MONGODB_DB_NAME,
+    corsOrigin: process.env.CORS_ORIGIN,
+    accessTokenSecret: process.env.ACCESS_TOKEN_SECRET,
+    accessTokenExpiry: process.env.ACCESS_TOKEN_EXPIRY,
+    refreshTokenSecret: process.env.REFRESH_TOKEN_SECRET,
+    refreshTokenExpiry: process.env.REFRESH_TOKEN_EXPIRY,
+    cloudinaryCloudName: process.env.CLOUDINARY_CLOUD_NAME,
+    cloudinaryApiKey: process.env.CLOUDINARY_API_KEY,
+    cloudinaryApiSecret: process.env.CLOUDINARY_API_SECRET,
+    cloudinaryProfilePictureFolderName: process.env.CLOUDINARY_PROFILE_PICTURE_FOLDER_NAME,
+    cloudinaryProfileVideoFolderName: process.env.CLOUDINARY_PROFILE_VIDEO_FOLDER_NAME,
+    emailSenderAddress: process.env.EMAIL_SENDER_ADDRESS,
+    emailSenderPassword: process.env.EMAIL_SENDER_PASSWORD,
+}
