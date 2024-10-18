@@ -9,69 +9,84 @@ import { createProfileEmail, profileEmail } from "../helpers/email.helper.js"
 import { findRoleById } from "../services/role.service.js"
 
 export const createProfile = asyncHandler(async (req, res) => {
-    const { actorId, profilePicture, videoType, videoLink, role } = req.body
+    const { actorId, profilePicture, videoType, videoLink, role, profileType } =
+      req.body;
     if (!actorId) {
-        return res
-            .status(200)
-            .json(new ApiError(400, "actorId is required"))
+      return res.status(200).json(new ApiError(400, "actorId is required"));
     }
-    const isRoleExist = await findRoleById(role)
-    if(!isRoleExist){
+    if (profileType === "crew") {
+      const isRoleExist = await findRoleById(role);
+      if (!isRoleExist) {
         return res.status(404).json(new ApiError(404, "role doest not exist"));
+      }
     }
-    let profileVideoUrl = ""
-    let profileVideoCloudinaryPublicId = ""
-    if (videoType === "link") {
-        profileVideoUrl = videoLink
-    } else {
-        if (req.files && req.files.video) {
-            const videoSize = getVideoSizeInMB(req.files.video)
-            if (videoSize > 1) {
-                return res
-                    .status(200)
-                    .json(new ApiError(500, "Video size should not be greater than 1 mb"))
-            }
-            const buffer = getBufferString(req.files.video)
-            const uploadResult = await uploadVideoToCloudinary(buffer, config.cloudinaryProfileVideoFolderName);
-            if (uploadResult.success) {
-                profileVideoUrl = uploadResult.result.url;
-                profileVideoCloudinaryPublicId = uploadResult.result.public_id;
-            }
-            else {
-                return res
-                    .status(200)
-                    .json(new ApiError(500, "Failed to upload video"))
-            }
-        }
-    }
-    let profilePictureUrl = ""
-    let profilePictureCloudinaryPublicId = ""
-    const uploadResult = await uploadOnCloudinary(profilePicture, "image", config.cloudinaryProfilePictureFolderName)
-    if (uploadResult.success) {
-        profilePictureUrl = uploadResult.result.url
-        profilePictureCloudinaryPublicId = uploadResult.result.public_id
-    }
-    else {
+  
+    let profileVideoUrl = "";
+    let profileVideoCloudinaryPublicId = "";
+  
+    let profilePictureUrl = "";
+    let profilePictureCloudinaryPublicId = "";
+  
+    
+    if (profileType === "casting") {
+      const uploadResult = await uploadOnCloudinary(
+        profilePicture,
+        "image",
+        config.cloudinaryProfilePictureFolderName
+      );
+      if (uploadResult.success) {
+        profilePictureUrl = uploadResult.result.url;
+        profilePictureCloudinaryPublicId = uploadResult.result.public_id;
+      } else {
         return res
-            .status(200)
-            .json(new ApiError(500, "Failed to upload Profile picture"))
+          .status(200)
+          .json(new ApiError(500, "Failed to upload Profile picture"));
+      }
+  
+      if (videoType === "link") {
+        profileVideoUrl = videoLink;
+      } else {
+        if (req.files && req.files.video) {
+          const videoSize = getVideoSizeInMB(req.files.video);
+          if (videoSize > 1) {
+            return res
+              .status(200)
+              .json(
+                new ApiError(500, "Video size should not be greater than 1 mb")
+              );
+          }
+          const buffer = getBufferString(req.files.video);
+          const uploadResult = await uploadVideoToCloudinary(
+            buffer,
+            config.cloudinaryProfileVideoFolderName
+          );
+          if (uploadResult.success) {
+            profileVideoUrl = uploadResult.result.url;
+            profileVideoCloudinaryPublicId = uploadResult.result.public_id;
+          } else {
+            return res
+              .status(200)
+              .json(new ApiError(500, "Failed to upload video"));
+          }
+        }
+      }
     }
     const data = {
-        ...req.body,
-        profilePicture: profilePictureUrl,
-        profilePicturePublicId: profilePictureCloudinaryPublicId,
-        video: profileVideoUrl,
-        videoPublicId: profileVideoCloudinaryPublicId
-    }
-    const createdProfile = await createProfileDb(data)
+      ...req.body,
+      profilePicture: profilePictureUrl,
+      profilePicturePublicId: profilePictureCloudinaryPublicId,
+      video: profileVideoUrl,
+      videoPublicId: profileVideoCloudinaryPublicId,
+    };
+    const createdProfile = await createProfileDb(data);
     if (createdProfile) {
-        await createProfileEmail(createdProfile)
-        const profile = await findProfileByIdWithAllDetails(createdProfile._id)
-        return res
-            .status(201)
-            .json(new ApiResponse(201, "Profile Created Successfully", profile))
+      await createProfileEmail(createdProfile);
+      const profile = await findProfileByIdWithAllDetails(createdProfile._id);
+      return res
+        .status(201)
+        .json(new ApiResponse(201, "Profile Created Successfully", profile));
     }
-})
+  });
 
 export const listProfiles = asyncHandler(async (req, res) => {
     const profiles = await findAllProfilesWithAllDetails()
