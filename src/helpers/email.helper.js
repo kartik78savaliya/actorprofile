@@ -9,9 +9,10 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 
 export const sendEmailNotification = async (receiverEmailAdrress, emailSubject, htmlTemplate) => {
     const transporter = nodemailer.createTransport({
-        host: 'smtp.mail.com',
-        port: 465, 
-        secure: true, 
+        // host: 'smtp.mail.com',
+        host: 'smtp.gmail.com',
+        // port: 465,
+        // secure: true,
         auth: {
             user: config.emailSenderAddress,
             pass: config.emailSenderPassword,
@@ -56,6 +57,18 @@ export const registrationVerficationOtpEmail = async (emailData) => {
     const htmlTemplate = await ejs.renderFile(templatePath, {
         userName: emailData.userName,
         otp: emailData.otp,
+    })
+    await sendEmailNotification(
+        emailData.receiverEmailAdrress,
+        emailData.subject,
+        htmlTemplate
+    )
+}
+
+export const profileEmail = async (emailData) => {
+    const templatePath = path.join(__dirname, '../views/profileEmail.ejs')
+    const htmlTemplate = await ejs.renderFile(templatePath, {
+        profiles: emailData.profiles,
     })
     await sendEmailNotification(
         emailData.receiverEmailAdrress,

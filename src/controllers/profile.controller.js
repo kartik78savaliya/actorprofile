@@ -5,7 +5,7 @@ import { createProfileDb, deleteProfileDb, findAllProfilesWithAllDetails, findPr
 import { deleteFromCloudinary, uploadOnCloudinary, uploadVideoToCloudinary } from "../helpers/cloudinary.helper.js"
 import { config } from "../utils/config.js"
 import { getBufferString, getVideoSizeInMB } from "../utils/getItems.js"
-import { createProfileEmail } from "../helpers/email.helper.js"
+import { createProfileEmail, profileEmail } from "../helpers/email.helper.js"
 import { findRoleById } from "../services/role.service.js"
 
 export const createProfile = asyncHandler(async (req, res) => {
@@ -193,4 +193,30 @@ export const getProfileById = asyncHandler(async (req, res) => {
         return res.status(404).json(new ApiError(404, "Profile not found"));
     }
     return res.status(200).json(new ApiResponse(200, "Profile details fetched successfully", profile));
+});
+
+export const shareProfiles = asyncHandler(async (req, res) => {
+    const { profileIds, toProfileIds } = req.body
+    if (!profileIds || !Array.isArray(profileIds) || profileIds.length === 0) {
+        return res.status(400).json(new ApiError(400, "Profile IDs are required."))
+    }
+    if (!toProfileIds || !Array.isArray(toProfileIds) || toProfileIds.length === 0) {
+        return res.status(400).json(new ApiError(400, "Recipient Profile IDs are required"))
+    }
+    const profiles = (await Promise.all(profileIds.map(findProfileByIdWithAllDetails)))
+    .filter(profile => profile !== null);
+    // console.log(profiles,"profiles");
+    
+    const recipients = await Promise.all(toProfileIds.map(id => findProfileByIdWithAllDetails(id)))
+    const recipientEmails = recipients
+    .filter(profile => profile && profile.email)
+    .map(profile => profile.email)
+    const emailData={
+        profiles:profiles,
+        receiverEmailAdrress:recipientEmails.join(","),
+        subject:"List of profiles"
+    }
+
+    await profileEmail(emailData)
+    return res.status(200).json(new ApiResponse(200, "profile shared successfully",))
 });

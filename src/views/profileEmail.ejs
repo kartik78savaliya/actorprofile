@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile Details</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        .container {
+            width: 100%;
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .header {
+            text-align: center;
+            background-color: #007BFF;
+            color: #fff;
+            padding: 10px;
+            border-radius: 8px 8px 0 0;
+        }
+        .header h1 {
+            margin: 0;
+        }
+        .profile {
+            margin: 20px 0;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+        }
+        .profile h3 {
+            margin: 0;
+            color: #007BFF;
+        }
+        .profile p {
+            margin: 5px 0;
+        }
+        .profile a {
+            color: #007BFF;
+            text-decoration: none;
+        }
+        .profile img {
+            max-width: 100px;
+            height: auto;
+            border-radius: 8px;
+        }
+        .footer {
+            text-align: center;
+            padding: 10px;
+            font-size: 12px;
+            color: #888;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Profile Details</h1>
+        </div>
+
+        <% profiles.forEach((profile, index) => { %>
+            <div class="profile">
+                <h3>Profile <%= index + 1 %></h3>
+                <p><strong>Name:</strong> <%= profile.name %></p>
+                <p><strong>Email:</strong> <%= profile.email %></p>
+                <p><strong>Mobile:</strong> <%= profile.mobile %></p>
+                <p><strong>Bio:</strong> <%= profile.bio %></p>
+                <p><strong>Acting Experience:</strong> <%= profile.actingExperience %></p>
+                <p><strong>Profile Type:</strong> <%= profile.profileType %></p>
+                <p><strong>Casting Type:</strong> <%= profile.castingType %></p>
+                <p><strong>Union Member:</strong> <%= profile.unionMember ? 'Yes' : 'No' %></p>
+                <p><strong>Role Name:</strong> <%= profile.roleName %></p>
+                <p><strong>Department Name:</strong> <%= profile.departmentName %></p>
+                <p><strong>Sub-Department Name:</strong> <%= profile.subDepartmentName %></p>
+                <p><strong>Profile Picture:</strong> 
+                    <a href="<%= profile.profilePicture %>" target="_blank">
+                        <img src="<%= profile.profilePicture %>" alt="Profile Picture">
+                    </a>
+                </p>
+                <p><strong>Video:</strong> 
+                    <a href="<%= profile.video %>" target="_blank">Watch Video</a>
+                </p>
+            </div>
+        <% }); %>
+
+        <div class="footer">
+            <p>This email was sent by Black Ops film.</p>
+        </div>
+    </div>
+</body>
+</html>

@@ -30,12 +30,12 @@ export const registerActor = asyncHandler(async (req, res) => {
     const otp = getRandomOtp()
     const unverfiedActorExist = await findActorByData({ email: email, isVerified: false })
     if (unverfiedActorExist) {
-        await updateActorDataById(unverfiedActorExist._id, { otp: otp })
+        const updatedActorData = await updateActorDataById(unverfiedActorExist._id, { otp: otp })
         const emailData = {
             subject: "Your otp for Registration Verification",
-            receiverEmailAdrress: unverfiedActorExist.email,
-            otp: unverfiedActorExist.otp,
-            userName: unverfiedActorExist.userName,
+            receiverEmailAdrress: updatedActorData.email,
+            otp: updatedActorData.otp,
+            userName: updatedActorData.userName,
         }
         await registrationVerficationOtpEmail(emailData)
         return res
