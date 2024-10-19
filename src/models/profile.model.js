@@ -29,7 +29,7 @@ const profileSchema = new Schema({
   },
   actingExperience: {
     type: String,
-    required: true
+    required: false
   },
   profilePicture: {
     type: String,
